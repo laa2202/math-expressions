@@ -6,10 +6,6 @@
  *
  * Group Number 8
  *
- * This program uses BFS starting from the number 1. Each number can go to two
- * other numbers: current / 3 or current * 2. BFS is a good fit because it tries
- * all shorter expressions before longer ones, so the first time we find the
- * target, we have found the shortest expression.
  */
 
 #include <cctype>
