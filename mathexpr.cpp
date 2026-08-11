@@ -20,7 +20,6 @@ const int NOT_VISITED = -1;
 const int MAX_LIMIT = 20000000;
 
 // Checks that the input is made only of digits.
-// This rejects things like -1, hello, 4.5, and 12abc.
 bool isValidNumber(string input)
 {
     if (input.length() == 0)
