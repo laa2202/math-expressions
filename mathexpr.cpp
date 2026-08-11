@@ -18,6 +18,7 @@
 
 #include <cctype>
 #include <iostream>
+#include <limits>
 #include <queue>
 #include <string>
 #include <vector>
@@ -47,23 +48,56 @@ bool isValidNumber(string input)
 }
 
 // Converts the string into a number.
-// If it gets bigger than the limit, we stop early since the search will not
-// go that high anyway.
+// If it is too large for long long, return -1 so we can reject it safely.
 long long stringToNumber(string input)
 {
     long long number = 0;
 
     for (int i = 0; i < (int)input.length(); i++)
     {
-        number = number * 10 + (input[i] - '0');
+        int digit = input[i] - '0';
 
-        if (number > MAX_LIMIT)
+        if (number > (numeric_limits<long long>::max() - digit) / 10)
         {
-            return MAX_LIMIT + 1;
+            return -1;
         }
+
+        number = number * 10 + digit;
     }
 
     return number;
+}
+
+bool isPowerOfTwo(long long number)
+{
+    if (number < 1)
+    {
+        return false;
+    }
+
+    while (number > 1)
+    {
+        if (number % 2 != 0)
+        {
+            return false;
+        }
+        number /= 2;
+    }
+
+    return true;
+}
+
+string makePowerOfTwoExpression(long long target)
+{
+    string answer = "1";
+
+    while (target > 1)
+    {
+        answer += " x 2";
+        target /= 2;
+    }
+
+    return answer;
 }
 
 string makeExpression(int target, vector<int>& parent, vector<char>& moveUsed)
@@ -213,7 +247,21 @@ int main(int argc, char* argv[])
 
     long long target = stringToNumber(input);
 
-    // This keeps the BFS from using too much memory on very large inputs.
+    if (target == -1)
+    {
+        cout << "No solution found." << endl;
+        return 0;
+    }
+
+    // Powers of two are easy because they only need repeated multiplication.
+    // This also handles large powers of two without using the BFS arrays.
+    if (target > MAX_LIMIT && isPowerOfTwo(target))
+    {
+        cout << makePowerOfTwoExpression(target) << endl;
+        return 0;
+    }
+
+    // This keeps the BFS from using too much memory on other very large inputs.
     if (target > MAX_LIMIT)
     {
         cout << "No solution found." << endl;
