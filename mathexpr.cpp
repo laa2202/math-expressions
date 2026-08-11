@@ -10,6 +10,10 @@
  * MIT OpenCourseWare, 6.006 Introduction to Algorithms,
  * Recitation 15: Shortest Paths.
  * https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-fall-2011/resources/recitation-15-shortest-paths/
+ *
+ * Parent/path reconstruction reference:
+ * Stack Overflow, "How does a Breadth-First Search work when looking for Shortest Path?"
+ * https://stackoverflow.com/questions/8379785/how-does-a-breadth-first-search-work-when-looking-for-shortest-path
  */
 
 #include <cctype>
